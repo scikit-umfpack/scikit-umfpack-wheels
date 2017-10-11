@@ -111,44 +111,6 @@ install:
      python -c "import sys,platform,struct;
      print(sys.platform, platform.machine(), struct.calcsize('P') * 8, )"
 
-  # Download and install static "openblas.a" to PYTHON\lib
-  - ps: |
-      $PYTHON_ARCH = $env:PYTHON_ARCH
-      $PYTHON = $env:PYTHON
-      If ($PYTHON_ARCH -eq 32) {
-          $OPENBLAS = $env:OPENBLAS_32
-          $OPENBLAS_SHA256 = $env:OPENBLAS_32_SHA256
-      } Else {
-          $OPENBLAS = $env:OPENBLAS_64
-          $OPENBLAS_SHA256 = $env:OPENBLAS_64_SHA256
-      }
-      $clnt = new-object System.Net.WebClient
-      $file = "$(New-TemporaryFile).zip"
-      $tmpdir = New-TemporaryFile | %{ rm $_; mkdir $_ }
-      $destination = "$PYTHON\lib\openblas.a"
-
-      echo $file
-      echo $tmpdir
-      echo $OPENBLAS
-
-      $clnt.DownloadFile($OPENBLAS,$file)
-
-      $downloaded_hash = Get-FileHash -Algorithm SHA256 $file
-      if ($downloaded_hash.hash -ne $OPENBLAS_SHA256) {
-          $downloaded_hash | Format-List
-          echo $OPENBLAS_SHA256
-          throw "Downloaded OPENBLAS zip SHA256 does not match."
-      }
-
-      Expand-Archive $file $tmpdir      
-
-      rm $tmpdir\$PYTHON_ARCH\lib\*.dll.a
-      $lib = ls $tmpdir\$PYTHON_ARCH\lib\*.a | ForEach { ls $_ } | Select-Object -first 1
-      echo $lib
-
-      cp $lib $destination
-      ls $destination
-
   # Upgrade to the latest pip and setuptools.
   - python -m pip install -U pip setuptools
 
@@ -168,6 +130,9 @@ install:
 
 build_script:
   - cd scikit-umfpack
+  
+  - ps: ls -r C:\Tools\vcpkg | Out-File vcpkg-directories.txt
+  - ps: appveyor PushArtifact (Get-Item -Path ".\vcpkg-directories.txt" -Verbose).FullName
   # Copy over additional DLLs to bundle to the wheels
   #
   # The find commands below are mainly to find the paths where the libraries are.
