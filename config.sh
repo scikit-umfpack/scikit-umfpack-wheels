@@ -9,6 +9,8 @@ OPENBLAS_VERSION=0.2.18
 
 source gfortran-install/gfortran_utils.sh
 
+PCRE_URL=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
+
 function build_simple_swig {
     local name=$1
     local version=$2
@@ -20,6 +22,7 @@ function build_simple_swig {
     local targz=${name_version}.tar.gz
     fetch_unpack $url/$targz
     (cd $name_version \
+        && wget $PCRE_URL \
         && ./Tools/pcre-build.sh \
         && ./configure --prefix=$BUILD_PREFIX \
         && make \
