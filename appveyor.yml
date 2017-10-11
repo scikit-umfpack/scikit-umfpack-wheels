@@ -92,7 +92,7 @@ install:
   - echo "Installed SDKs:"
   - dir "C:/Program Files/Microsoft SDKs/Windows"
   
-  - vcpkg install suitesparse
+  - vcpkg install suitesparse:x64-windows
 
   # Prepend newly installed Python to the PATH of this build (this cannot be
   # done from inside the powershell script as it would require to restart
