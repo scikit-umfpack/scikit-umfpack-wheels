@@ -83,6 +83,9 @@ init:
       }
 
 install:
+  # Get needed submodules
+  - git submodule update --init --recursive
+
   - cmd: echo "Filesystem root:"
   - dir C:\
 
@@ -101,9 +104,6 @@ install:
   - >-
      python -c "import sys,platform,struct;
      print(sys.platform, platform.machine(), struct.calcsize('P') * 8, )"
-
-  # Get needed submodules
-  - git submodule update --init scipy numpy-distutils
 
   # Download and install static "openblas.a" to PYTHON\lib
   - ps: |
