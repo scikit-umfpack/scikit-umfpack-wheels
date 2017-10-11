@@ -161,10 +161,7 @@ install:
       mv numpy-distutils\numpy\compat $NumpyDir
 
 build_script:
-  - cd scipy
-  - git checkout %BUILD_COMMIT%
-  # Append license text relevant for the built wheel
-  - type ..\LICENSE_win32.txt >> LICENSE.txt
+  - cd scikit-umfpack
   # Copy over additional DLLs to bundle to the wheels
   #
   # The find commands below are mainly to find the paths where the libraries are.
