@@ -1,9 +1,6 @@
 [submodule "numpy"]
 	path = numpy
 	url = git://github.com/numpy/numpy.git
-[submodule "scipy"]
-	path = scipy
-	url = git://github.com/scipy/scipy.git
 [submodule "multibuild"]
 	path = multibuild
 	url = https://github.com/matthew-brett/multibuild.git
@@ -14,3 +11,6 @@
 	path = numpy-distutils
 	url = https://github.com/numpy/numpy.git
 	branch = master
+[submodule "scikit-umfpack"]
+	path = scikit-umfpack
+	url = https://github.com/scikit-umfpack/scikit-umfpack.git

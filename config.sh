@@ -9,6 +9,11 @@ OPENBLAS_VERSION=0.2.18
 
 source gfortran-install/gfortran_utils.sh
 
+function pre_build {
+    # Install the build dependencies
+    yum install -y suitesparse-devel swig
+}
+
 function build_wheel {
     if [ -z "$IS_OSX" ]; then
         build_libs $PLAT
@@ -61,10 +66,6 @@ function run_tests {
     else
         local testmode="fast"
     fi
-    # Check bundled license file
-    python ../check_license.py
-    # Run tests
-    python ../run_scipy_tests.py $testmode -- -n2 -rfEX
-    # Show BLAS / LAPACK used
-    python -c 'import scipy; scipy.show_config()'
+    # Run nose tests
+    nosetests -v scikits.umfpack
 }
