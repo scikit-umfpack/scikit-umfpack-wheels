@@ -89,7 +89,6 @@ init:
       }
 
 install:
-  - cd C:\fake-directory
   # Get needed submodules
   - git submodule update --init --recursive
 
