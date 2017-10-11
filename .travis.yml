@@ -1,6 +1,6 @@
 env:
     global:
-        - REPO_DIR=scipy
+        - REPO_DIR=scikit-umfpack
         # Also see DAILY_COMMIT below
         - BUILD_COMMIT=4f57a98d143da67323058bc94af64f406a12879a
         - PLAT=x86_64
@@ -111,15 +111,13 @@ before_install:
           UPLOAD_ARGS="--no-update-index";
       fi
     - BUILD_DEPENDS="$NP_BUILD_DEP $CYTHON_BUILD_DEP"
-    - TEST_DEPENDS="$NP_TEST_DEP pytest pytest-xdist pytest-faulthandler pytest-env"
+    - TEST_DEPENDS="$NP_TEST_DEP pytest pytest-xdist pytest-faulthandler pytest-env nose"
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install
 
 install:
     # Maybe get and clean and patch source
-    - clean_code $REPO_DIR $BUILD_COMMIT
-    - ./patch_code.sh $REPO_DIR
     - build_wheel $REPO_DIR $PLAT
 
 script:
