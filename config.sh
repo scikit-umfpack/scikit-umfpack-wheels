@@ -9,9 +9,28 @@ OPENBLAS_VERSION=0.2.18
 
 source gfortran-install/gfortran_utils.sh
 
+function build_simple_swig {
+    local name=$1
+    local version=$2
+    local url=$3
+    if [ -e "${name}-stamp" ]; then
+        return
+    fi
+    local name_version="${name}-${version}"
+    local targz=${name_version}.tar.gz
+    fetch_unpack $url/$targz
+    (cd $name_version \
+        && ./Tools/pcre-build.sh \
+        && ./configure --prefix=$BUILD_PREFIX \
+        && make \
+        && make install)
+    touch "${name}-stamp"
+}
+
 function pre_build {
     # Install the build dependencies
-    yum install -y suitesparse-devel swig
+    yum install -y suitesparse-devel
+    build_simple_swig swig 3.0.12 http://prdownloads.sourceforge.net/swig/
 }
 
 function build_wheel {
