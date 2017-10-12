@@ -11,9 +11,8 @@ env:
         - MANYLINUX_URL="https://5cf40426d9f06eb7461d-6fe47d9331aba7cd62fc36c7196769e4.ssl.cf2.rackcdn.com"
         - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
         # Following generated with
-        # travis encrypt -r MacPython/scipy-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
-        - secure:
-            "fne+dO/N+Zv8pusPVO6S58p7lFWLDIwjXwf/IgBPxGSdDFEQVY8xl0+nGPNNzYZfmX/inBrb/3+8el9sggC+X7KG6mGmCtcpwems2sWn6XY5OQ+kWl8SEdDs2SiAsrieqbC3d1cmMoHyddX/YdGWVSdIji70nRER0j9wjNwYNlE="
+        # travis encrypt -r scikit-umfpack/scikit-umfpack-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
+        - secure: "MhmVJMBaQeaCjChHBGTzai+UJpcXf1SX6Ykig6HHWvwP9BFvJKDaaIz5iMLRhXKvzfleA76eli/l2Kd2nFmb73T3PCOtHqFay6EtrJTO0eXAF/yPul8lZwLCKR1M3Xq+NhFiQ5YS+fJx50c0Y/ybLHE9VMaYr3OMaxN0klrGR1m90SpCEDjKYTwNqkS//PxHJ9lwz9pdEzZmXaCx2XHeaSiv6BK/f0mqC2bLD5X0GBnEAxtX4BFN8BbsuSns7pJMmy8P0cw1pkq4GM5Pr0l+R+Qgg9pMJy0em1JKJp3BYugLFaug0x/mg87pRuJQeBlAufOrkKYbIipg1NxCj1jjQ+5h4/tNkYi+/1V+MGiOQFDT2rylJaMK+aFH6IY+7RCfKI7XKQbv1lp8eN38wXcc89FnQ8PnrH7G1Ip5YKeZRGkCKYSCKE98MPtmNwliFBfJmKaCQA8XOLC5m45DTPc9fQv0sJnrM6ra/ZBkGO5mocQTgIk13VSBPL+0wtPD3zhIYTltUWzHmKXKDDNh3zWqnKUGDW2Fo+b2RFZLwnWL9/ayvkL2RuoH/Urf4zpLSwlkQU6XoQEn4vR1kGc8Bf82Sd67qy2PLuzn+mkkKvJobsQ28tLnx34l+vfEmM3FXwkffIwquStDBi8HN2GNUFU526qBr2pKZhvca04JUU5vyKo="
         # Commit when running from daily branch
         - DAILY_COMMIT=master
 
