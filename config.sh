@@ -32,8 +32,13 @@ function build_simple_swig {
 
 function pre_build {
     # Install the build dependencies
-    yum install -y suitesparse-devel
-    build_simple_swig swig 3.0.12 http://prdownloads.sourceforge.net/swig/
+    if [ -n "$IS_OSX" ]; then
+        brew update
+        brew install homebrew/science/suite-sparse > /dev/null
+    else
+        yum install -y suitesparse-devel
+        build_simple_swig swig 3.0.12 http://prdownloads.sourceforge.net/swig/
+    fi
 }
 
 function build_wheel {
