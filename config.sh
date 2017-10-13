@@ -35,6 +35,7 @@ function pre_build {
     if [ -n "$IS_OSX" ]; then
         brew update
         brew install homebrew/science/suite-sparse > /dev/null
+        brew install swig
     else
         yum install -y suitesparse-devel
         build_simple_swig swig 3.0.12 http://prdownloads.sourceforge.net/swig/
