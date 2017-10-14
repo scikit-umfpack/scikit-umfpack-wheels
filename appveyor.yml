@@ -70,6 +70,11 @@ install:
   - echo "Installed SDKs:"
   - dir "C:/Program Files/Microsoft SDKs/Windows"
   
+  - python -m pip install --pre scipy
+
+  # Upgrade numpy to the version used for testing
+  - python -m pip install "%NUMPY_TEST_DEP%"
+  
   - vcpkg install suitesparse:x64-windows
   - choco install swig
 
@@ -155,10 +160,6 @@ build_script:
 before_test:
   # Install test requirements.
   - python -m pip install pytest pytest-xdist pytest-faulthandler pytest-env Pillow mpmath nose
-  - python -m pip install --pre scipy
-
-  # Upgrade numpy to the version used for testing
-  - python -m pip install "%NUMPY_TEST_DEP%"
 
 test_script:
   - pytest
