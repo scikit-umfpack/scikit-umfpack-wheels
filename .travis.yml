@@ -4,7 +4,7 @@ env:
         # Also see DAILY_COMMIT below
         - BUILD_COMMIT=4f57a98d143da67323058bc94af64f406a12879a
         - PLAT=x86_64
-        - NP_BUILD_DEP="numpy"
+        - NP_BUILD_DEP="numpy==1.8.2"
         - CYTHON_BUILD_DEP="Cython"
         - NP_TEST_DEP="numpy"
         - UNICODE_WIDTH=32
