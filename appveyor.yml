@@ -70,8 +70,6 @@ install:
   - echo "Installed SDKs:"
   - dir "C:/Program Files/Microsoft SDKs/Windows"
   
-  - python -m pip install --pre scipy
-
   # Upgrade numpy to the version used for testing
   - python -m pip install "%NUMPY_TEST_DEP%"
   
@@ -154,7 +152,7 @@ build_script:
       # Upload artifact to Appveyor immediately after build
       ls dist -r | Foreach-Object {
           appveyor PushArtifact $_.FullName
-          pip install $_.FullName
+          pip install --pre $_.FullName
       }
 
 before_test:
