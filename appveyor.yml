@@ -30,7 +30,7 @@ environment:
       WHEELHOUSE_UPLOADER_USERNAME: travis-worker
       WHEELHOUSE_UPLOADER_SECRET:
         secure:
-            jIyaD+VWmTlDGXThsKAkiLq8iljgYHiriq+kEUuW9tHj67R5BapLxLjbfco2nt8Y
+            9/K6DI3wjJQrG8sl1m159cdwWpqQZhqPhxIny3V++8UUPVKBU6uKu+D9D47Y1f1+
       BUILD_COMMIT: 4f57a98d143da67323058bc94af64f406a12879a
       DAILY_COMMIT: master
 
