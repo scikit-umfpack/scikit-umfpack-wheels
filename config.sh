@@ -9,37 +9,11 @@ OPENBLAS_VERSION=0.2.18
 
 source gfortran-install/gfortran_utils.sh
 
-PCRE_URL=ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
-
-function build_simple_swig {
-    local name=$1
-    local version=$2
-    local url=$3
-    if [ -e "${name}-stamp" ]; then
-        return
-    fi
-    local name_version="${name}-${version}"
-    local targz=${name_version}.tar.gz
-    fetch_unpack $url/$targz
-    (cd $name_version \
-        && wget $PCRE_URL \
-        && ./Tools/pcre-build.sh \
-        && ./configure --prefix=$BUILD_PREFIX \
-        && make \
-        && make install)
-    touch "${name}-stamp"
-}
-
 function pre_build {
+    if [ -n "$IS_OSX" ]; then brew update; fi  # Update to get suite-sparse formula
     # Install the build dependencies
-    if [ -n "$IS_OSX" ]; then
-        brew update
-        brew install homebrew/science/suite-sparse > /dev/null
-        brew install swig
-    else
-        yum install -y suitesparse-devel
-        build_simple_swig swig 3.0.12 http://prdownloads.sourceforge.net/swig/
-    fi
+    build_swig
+    build_suitesparse
 }
 
 function build_wheel {
