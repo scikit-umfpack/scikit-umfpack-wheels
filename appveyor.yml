@@ -16,23 +16,14 @@ cache:
 
 environment:
   global:
-      MINGW_32: C:\mingw-w64\i686-6.3.0-posix-dwarf-rt_v5-rev1\mingw32\bin
-      MINGW_64: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64\bin
-      OPENBLAS_32: https://3f23b170c54c2533c070-1c8a9b3114517dc5fe17b7c3f8c63a43.ssl.cf2.rackcdn.com/openblas-5f998ef_gcc7_1_0_win32.zip
-      OPENBLAS_64: https://3f23b170c54c2533c070-1c8a9b3114517dc5fe17b7c3f8c63a43.ssl.cf2.rackcdn.com/openblas-5f998ef_gcc7_1_0_win64.zip
-      OPENBLAS_32_SHA256: 0a12804b08d475179a0411936f509b44d7512f084b4a81c2fa3abe8c9ac4ee09
-      OPENBLAS_64_SHA256: 8f11d8a5a79795a3a1ccb2326c979a0ca426e623eee93f8e35239e3c21e62cd6
-      CYTHON_BUILD_DEP: Cython==0.26.1
-      NUMPY_TEST_DEP: numpy==1.13.1
-      TEST_MODE: fast
+      NPY_NUM_BUILD_JOBS: 4
       APPVEYOR_SAVE_CACHE_ON_ERROR: true
       APPVEYOR_SKIP_FINALIZE_ON_EXIT: true
+      CONTAINER: wheels
       WHEELHOUSE_UPLOADER_USERNAME: travis-worker
       WHEELHOUSE_UPLOADER_SECRET:
         secure:
             9/K6DI3wjJQrG8sl1m159cdwWpqQZhqPhxIny3V++8UUPVKBU6uKu+D9D47Y1f1+
-      BUILD_COMMIT: 4f57a98d143da67323058bc94af64f406a12879a
-      DAILY_COMMIT: master
 
   matrix:
     - PYTHON: C:\Python36-x64
@@ -48,15 +39,6 @@ environment:
 init:
   - "ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%"
   - "ECHO \"%APPVEYOR_SCHEDULED_BUILD%\""
-  - ps: >-
-      if ($env:APPVEYOR_REPO_BRANCH -eq "daily") {
-        $env:CONTAINER = "pre-release"
-        if ($env:DAILY_COMMIT) { $env:BUILD_COMMIT = $env:DAILY_COMMIT }
-        $env:NPY_RELAXED_STRIDES_DEBUG = 1
-      } else {
-        $env:CONTAINER = "wheels"
-        $env:UPLOAD_ARGS = "--no-update-index"
-      }
 
 install:
   # Get needed submodules
@@ -69,9 +51,6 @@ install:
 
   - echo "Installed SDKs:"
   - dir "C:/Program Files/Microsoft SDKs/Windows"
-  
-  # Upgrade numpy to the version used for testing
-  - python -m pip install "%NUMPY_TEST_DEP%"
   
   - vcpkg install suitesparse:x64-windows
   - choco install swig
@@ -88,27 +67,14 @@ install:
      print(sys.platform, platform.machine(), struct.calcsize('P') * 8, )"
 
   # Upgrade to the latest pip and setuptools.
-  - python -m pip install -U pip setuptools
-
-  # Pin wheel to 0.26 to avoid Windows ABI tag for built wheel
-  - pip install "wheel==0.26"
-
-  # Install build requirements.
-  - pip install "%CYTHON_BUILD_DEP%" "%NUMPY_BUILD_DEP%"
-
-  # Replace numpy distutils with a version that can build with msvc + mingw-gfortran.
-  - ps: |
-      $NumpyDir = $((python -c 'import os; import numpy; print(os.path.dirname(numpy.__file__))') | Out-String).Trim()
-      rm -r -Force "$NumpyDir\distutils"
-      mv numpy-distutils\numpy\distutils $NumpyDir
-      rm -r -Force "$NumpyDir\compat"
-      mv numpy-distutils\numpy\compat $NumpyDir
+  - python -m pip install -U pip setuptools wheel
+  
+  # Upgrade numpy to the version used for testing
+  - pip install cython wheel
 
 build_script:
   - cd scikit-umfpack
   
-  - ps: ls -r C:\Tools\vcpkg | Out-File vcpkg-directories.txt
-  - ps: appveyor PushArtifact (Get-Item -Path ".\vcpkg-directories.txt" -Verbose).FullName
   # Copy over additional DLLs to bundle to the wheels
   #
   # The find commands below are mainly to find the paths where the libraries are.
@@ -138,15 +104,6 @@ build_script:
   - ps: cp C:\Tools\vcpkg\installed\x64-windows\bin\*.dll build\lib.win-amd64-3.6\scikits\umfpack
 
   # Build wheel using setup.py
-  - ps: |
-      $PYTHON_ARCH = $env:PYTHON_ARCH
-      If ($PYTHON_ARCH -eq 32) {
-          $MINGW = $env:MINGW_32 
-      } Else {
-          $MINGW = $env:MINGW_64
-      }
-      $env:Path += ";$MINGW"
-      $env:NPY_NUM_BUILD_JOBS = "4"
   - python setup.py bdist_wheel
   - ps: |
       # Upload artifact to Appveyor immediately after build
@@ -157,7 +114,7 @@ build_script:
 
 before_test:
   # Install test requirements.
-  - python -m pip install pytest pytest-xdist pytest-faulthandler pytest-env Pillow mpmath nose
+  - python -m pip install pytest pytest-xdist pytest-faulthandler pytest-env mpmath nose
 
 test_script:
   - pytest
