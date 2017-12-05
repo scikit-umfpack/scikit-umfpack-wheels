@@ -7,10 +7,6 @@
 [submodule "gfortran-install"]
 	path = gfortran-install
 	url = https://github.com/MacPython/gfortran-install.git
-[submodule "numpy-distutils"]
-	path = numpy-distutils
-	url = https://github.com/numpy/numpy.git
-	branch = master
 [submodule "scikit-umfpack"]
 	path = scikit-umfpack
 	url = https://github.com/scikit-umfpack/scikit-umfpack.git
