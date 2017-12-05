@@ -70,7 +70,7 @@ install:
   - python -m pip install -U pip setuptools wheel
   
   # Upgrade numpy to the version used for testing
-  - pip install cython wheel
+  - pip install cython wheel numpy
 
 build_script:
   - cd scikit-umfpack
