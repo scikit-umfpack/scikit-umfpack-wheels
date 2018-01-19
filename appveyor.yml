@@ -1,4 +1,4 @@
-# As config was originally based on an example by Olivier Grisel. Thanks!
+  # As config was originally based on an example by Olivier Grisel. Thanks!
 # https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
 clone_depth: 50
 
@@ -11,8 +11,6 @@ max_jobs: 100
 
 cache:
   - '%LOCALAPPDATA%\pip\Cache'
-  - 'C:\Tools\vcpkg\installed'
-  - 'C:\Tools\vcpkg\packages'
 
 environment:
   global:
@@ -24,6 +22,7 @@ environment:
       WHEELHOUSE_UPLOADER_SECRET:
         secure:
             9/K6DI3wjJQrG8sl1m159cdwWpqQZhqPhxIny3V++8UUPVKBU6uKu+D9D47Y1f1+
+      CONDA_INSTALL_LOCN: C:\\Miniconda36-x64
 
   matrix:
     - PYTHON: C:\Python36-x64
@@ -44,16 +43,9 @@ install:
   # Get needed submodules
   - git submodule update --init --recursive
   
-  - ps: cp -Force .\site.cfg scikit-umfpack
-
-  - cmd: echo "Filesystem root:"
-  - dir C:\
-
-  - echo "Installed SDKs:"
-  - dir "C:/Program Files/Microsoft SDKs/Windows"
-  
-  - vcpkg install suitesparse:x64-windows
-  - choco install swig
+  - call %CONDA_INSTALL_LOCN%\Scripts\activate.bat
+  - conda config --add channels conda-forge --force
+  - conda install --yes --quiet swig suitesparse
 
   # Prepend newly installed Python to the PATH of this build (this cannot be
   # done from inside the powershell script as it would require to restart
@@ -74,6 +66,8 @@ install:
 
 build_script:
   - cd scikit-umfpack
+  
+  - git apply ../pr_52.patch
   
   # Copy over additional DLLs to bundle to the wheels
   #
@@ -100,8 +94,8 @@ build_script:
   - copy "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\redist\amd64\Microsoft.VC90.CRT"\*.* "build\lib.win-amd64-2.7\scikits\umfpack\"
 
   # Copy the vcpkg libraries
-  - ps: cp C:\Tools\vcpkg\installed\x64-windows\bin\*.dll build\lib.win-amd64-3.5\scikits\umfpack
-  - ps: cp C:\Tools\vcpkg\installed\x64-windows\bin\*.dll build\lib.win-amd64-3.6\scikits\umfpack
+  - ps: cp "$env:CONDA_INSTALL_LOCN\Library\bin\*.dll" build\lib.win-amd64-3.5\scikits\umfpack
+  - ps: cp "$env:CONDA_INSTALL_LOCN\Library\bin\*.dll" build\lib.win-amd64-3.6\scikits\umfpack
 
   # Build wheel using setup.py
   - python setup.py bdist_wheel
