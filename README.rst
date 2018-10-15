@@ -1,18 +1,18 @@
-###################################
-Building and uploading scipy wheels
-###################################
+############################################
+Building and uploading scikit-umfpack wheels
+############################################
 
 We automate wheel building using this custom github repository that builds on
 the travis-ci OSX machines and the travis-ci Linux machines.
 
 The travis-ci interface for the builds is
-https://travis-ci.org/MacPython/scipy-wheels
+https://travis-ci.org/scikit-umfpack/scikit-umfpack-wheels
 
 Appveyor interface at
-https://ci.appveyor.com/project/scipy/scipy-wheels
+https://ci.appveyor.com/project/scikit-umfpack/scikit-umfpack-wheels
 
 The driving github repository is
-https://github.com/MacPython/scipy-wheels
+https://github.com/scikit-umfpack/scikit-umfpack-wheels
 
 Using the repository
 ====================
@@ -24,8 +24,9 @@ There are two important branches:
 
 Travis-CI builds the ``daily`` branch - er - daily, via a `Travis-CI cron job
 <https://docs.travis-ci.com/user/cron-jobs/>`_ to check that we can build
-against current Scipy master.   When trying to fix builds against master, or
-developing new CI build machinery, *please use the* ``daily`` *branch*.
+against current scikit-umfpack master.   When trying to fix builds against
+master, or developing new CI build machinery, *please use the* ``daily``
+*branch*.
 
 Builds from the ``daily`` branch upload to a Rackspace container for
 pre-releases at
@@ -49,7 +50,7 @@ How it works
 The wheel-building repository:
 
 * does a fresh build of any required C / C++ libraries;
-* builds a scipy wheel, linking against these fresh builds;
+* builds a scikit-umfpack wheel, linking against these fresh builds;
 * processes the wheel using delocate_ (OSX) or auditwheel_ ``repair``
   (Manylinux1_).  ``delocate`` and ``auditwheel`` copy the required dynamic
   libraries into the wheel and relinks the extension modules against the
@@ -79,7 +80,7 @@ on the travis-ci interface.  Contact us on the mailing list if you need this.
 
 You can trigger a build by:
 
-* making a commit to the `scipy-wheels` repository (e.g. with `git
+* making a commit to the `scikit-umfpack-wheels` repository (e.g. with `git
   commit --allow-empty`); or
 * clicking on the circular arrow icon towards the top right of the travis-ci
   page, to rerun the previous build.
@@ -89,16 +90,16 @@ a new set of build products and logs, keeping the old ones for reference.
 Keeping the old build logs helps us keep track of previous problems and
 successful builds.
 
-Which scipy commit does the repository build?
-===============================================
+Which scikit-umfpack commit does the repository build?
+======================================================
 
-The `scipy-wheels` repository will build the commit specified in the
+The `scikit-umfpack-wheels` repository will build the commit specified in the
 ``BUILD_COMMIT`` at the top of the ``.travis.yml`` file and ``appveyor.yml``
 files.  This can be any naming of a commit, including branch name, tag name or
 commit hash.
 
-Note: when making a SciPy release, it's best to only push the commit (not the
-tag) of the release to the ``scipy`` repo, then change ``BUILD_COMMIT`` to the
+Note: when making a scikit-umfpack release, it's best to only push the commit (not the
+tag) of the release to the ``scikit-umfpack`` repo, then change ``BUILD_COMMIT`` to the
 commit hash, and only after all wheel builds completed successfully push the
 release tag to the repo.  This avoids having to move or delete the tag in case
 of an unexpected build/test issue.
@@ -129,7 +130,7 @@ be something like::
 
     VERSION=0.18.0
     CDN_URL=https://3f23b170c54c2533c070-1c8a9b3114517dc5fe17b7c3f8c63a43.ssl.cf2.rackcdn.com
-    wheel-uploader -u $CDN_URL -s -v -w ~/wheelhouse -t all scipy $VERSION
+    wheel-uploader -u $CDN_URL -s -v -w ~/wheelhouse -t all scikit-umfpack $VERSION
 
 where:
 
@@ -140,7 +141,7 @@ where:
 * ``-w ~/wheelhouse`` means download the wheels from to the local directory
   ``~/wheelhouse``.
 
-``scipy`` is the root name of the wheel(s) to download / upload, and
+``scikit-umfpack`` is the root name of the wheel(s) to download / upload, and
 ``0.18.0`` is the version to download / upload.
 
 In order to upload the wheels, you will need something like this
@@ -155,7 +156,7 @@ in your ``~/.pypirc`` file::
     password:your_password
 
 So, in this case, `wheel-uploader` will download all wheels starting with
-`scipy-0.18.0-` from the URL in ``$CDN_URL`` above to ``~/wheelhouse``, then
+`scikit-umfpack-0.18.0-` from the URL in ``$CDN_URL`` above to ``~/wheelhouse``, then
 upload them to PyPI.
 
 Of course, you will need permissions to upload to PyPI, for this to work.
