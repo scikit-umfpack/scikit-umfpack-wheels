@@ -2,7 +2,7 @@ env:
     global:
         - REPO_DIR=scikit-umfpack
         # Also see DAILY_COMMIT below
-        - BUILD_COMMIT=4f57a98d143da67323058bc94af64f406a12879a
+        - BUILD_COMMIT=a2102ef92f4dd060138e72bb5d7c444f8ec49cbc
         - PLAT=x86_64
         - NP_BUILD_DEP="numpy==1.8.2"
         - CYTHON_BUILD_DEP="Cython"
