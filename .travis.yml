@@ -12,7 +12,7 @@ env:
         - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
         # Following generated with
         # travis encrypt -r scikit-umfpack/scikit-umfpack-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
-        - secure: "MhmVJMBaQeaCjChHBGTzai+UJpcXf1SX6Ykig6HHWvwP9BFvJKDaaIz5iMLRhXKvzfleA76eli/l2Kd2nFmb73T3PCOtHqFay6EtrJTO0eXAF/yPul8lZwLCKR1M3Xq+NhFiQ5YS+fJx50c0Y/ybLHE9VMaYr3OMaxN0klrGR1m90SpCEDjKYTwNqkS//PxHJ9lwz9pdEzZmXaCx2XHeaSiv6BK/f0mqC2bLD5X0GBnEAxtX4BFN8BbsuSns7pJMmy8P0cw1pkq4GM5Pr0l+R+Qgg9pMJy0em1JKJp3BYugLFaug0x/mg87pRuJQeBlAufOrkKYbIipg1NxCj1jjQ+5h4/tNkYi+/1V+MGiOQFDT2rylJaMK+aFH6IY+7RCfKI7XKQbv1lp8eN38wXcc89FnQ8PnrH7G1Ip5YKeZRGkCKYSCKE98MPtmNwliFBfJmKaCQA8XOLC5m45DTPc9fQv0sJnrM6ra/ZBkGO5mocQTgIk13VSBPL+0wtPD3zhIYTltUWzHmKXKDDNh3zWqnKUGDW2Fo+b2RFZLwnWL9/ayvkL2RuoH/Urf4zpLSwlkQU6XoQEn4vR1kGc8Bf82Sd67qy2PLuzn+mkkKvJobsQ28tLnx34l+vfEmM3FXwkffIwquStDBi8HN2GNUFU526qBr2pKZhvca04JUU5vyKo="
+        - secure: "QDJbf5XJFcaJEVxDbDOLwH2IpRfSTfWpdwgOfdFjL326ah2FpmBgnYOO810eYbKHSv0EGmHaO28Sg2iA3dH0dFu3qdD7EPYpRrNVQl2OQuMfk3x7eFkpKqLGUzjo3ck6XNBUqBec00Uhy2FvYoZFxEkjtXMHSQ3wjOd1EfXiHbJ8GdsCKDzuVb8TDlGuBfb6xjtPhnJ7VdGEHhpm5qBOK6b26KxAGhJqgW6KKIgytOIhM+DsCSrCMva41DF+u19PdJtgkLqUqBRTm3JseTBg1X8B7aYdWjQeskDmqrdYSiTenXiqGsK6ghTSHKY6E8jwlslICMeVN6bMkHSL46/WuAROhypQe814xqrCYMgC7UZ6pdh0S6RbNjrPiRDAzojg6yVPmPRbVTGpSryGP2W9lyVAkXPbhbt54OqUKk+z9ILbMVFq66hyrVPBP+TNEywpNNgBrUxGkAmu2ckZcbzUMbOm3kHyUV7EuUQrrn7B6egzDm0r8owhOyGDpKWyQuVbBfpc52HlQ+LLiP9dhoLaFuEyvbZbx1dyvi9bGi6Kq33M6+D4Tiq8HCvVSyGD7dkn6n1N9aDFm+3ZCXomttoG8CCfevy9OI/50svUoAmnu1VdUSv+1ZqEybupzdSn/aOnLtSZtmzphe4I6R6/CgcaykWCjPSJxJh80j9aIS7p6P0="
         # Commit when running from daily branch
         - DAILY_COMMIT=master
 
